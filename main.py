@@ -82,8 +82,7 @@ def main(data, context):
       for i in range(len(articles)):
           if "covid" in articles[i]["title"].lower():
               # replacing COVID in the article title so that ChatGPT and Dall-E won't reject it
-              new_title = articles[i]["title"].replace("COVID", "Virus")
-              articles[i]["title"] = new_title
+              articles[i]["title"] = articles[i]["title"].replace("COVID", "Virus")
           while tweet_posted == False:
             print(f"Trying dalle. Article title: {articles[i]['title']}")
             tweet_posted = dalle(search_key=articles[i]["title"], article_url=articles[i]["url"])
