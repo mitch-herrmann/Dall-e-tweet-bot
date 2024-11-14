@@ -20,7 +20,6 @@ def main(data, context):
       "Content-Type": "application/json"}
 
 
-
   url = "https://newsapi.org/v2/everything"
   headers = {
       "X-Api-Key": news_API_key}
@@ -36,6 +35,7 @@ def main(data, context):
     twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret
   )
   api = tweepy.API(auth)
+
   
   def gpt(search_key):
       GPT_params = {
@@ -47,6 +47,7 @@ def main(data, context):
       GPT_response = requests.post(url=GPT_url, headers=dalle_header, json=GPT_params).json()
       return GPT_response['choices'][0]['text'].lstrip("\n")
 
+  
   def dalle(search_key, article_url):
       dalle_params = {
           "prompt": search_key,
@@ -80,6 +81,7 @@ def main(data, context):
       tweet_posted = False
       for i in range(len(articles)):
           if "covid" in articles[i]["title"].lower():
+              # replacing COVID in the article title so that ChatGPT and Dall-E won't reject it
               new_title = articles[i]["title"].replace("COVID", "Virus")
               articles[i]["title"] = new_title
           while tweet_posted == False:
